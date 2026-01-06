@@ -4,6 +4,8 @@ export PYTHONUNBUFFERED=1
 
 echo "**** Setting the timezone based on the TIME_ZONE environment variable. If not set, it defaults to Etc/UTC. ****"
 export TZ=${TIME_ZONE:-"Etc/UTC"}
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
 echo "**** Timezone set to $TZ ****"
 echo "$TZ" | sudo tee /etc/timezone > /dev/null
 sudo ln -sf "/usr/share/zoneinfo/$TZ" /etc/localtime
