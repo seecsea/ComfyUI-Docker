@@ -70,7 +70,7 @@ target "_cu129" {
 target "_cu130" {
     inherits = ["_common"]
     args = {
-        BASE_IMAGE         = "nvidia/cuda:13.0.2-devel-ubuntu24.04"
+        BASE_IMAGE         = "nvidia/cuda:13.0.2-cudnn-devel-ubuntu24.04"
         CUDA_VERSION       = "cu130"
     }
 }
