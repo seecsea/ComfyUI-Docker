@@ -65,13 +65,14 @@ RUN uv python install ${PYTHON_VERSION} --default --preview && \
 ENV PATH="/workspace/venv/bin:/venv/bin:$PATH"
 
 # Install essential Python packages and dependencies
+# torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 RUN pip install --no-cache-dir -U \
     pip setuptools wheel \
     jupyterlab jupyterlab_widgets ipykernel ipywidgets \
     huggingface_hub hf_transfer \
     numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
     triton \
-    torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
+    torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://mirrors.nju.edu.cn/pytorch/whl/${CUDA_VERSION}
 
 # Install ComfyUI and ComfyUI Manager
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
