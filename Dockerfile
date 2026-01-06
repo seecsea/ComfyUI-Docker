@@ -65,7 +65,8 @@ RUN uv python install ${PYTHON_VERSION} --default --preview && \
 ENV PATH="/workspace/venv/bin:/venv/bin:$PATH"
 
 # Install essential Python packages and dependencies
-RUN pip install --no-cache-dir -U \
+RUN pip config set global.index-url https://mirrors.cloud.tencent.com/pypi/simple/ && \
+    pip install --no-cache-dir -U \
     pip setuptools wheel \
     jupyterlab jupyterlab_widgets ipykernel ipywidgets \
     huggingface_hub hf_transfer \
