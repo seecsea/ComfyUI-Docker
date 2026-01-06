@@ -49,8 +49,8 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
 # Install essential packages
 RUN apt-get install --yes --no-install-recommends \
-        git wget curl bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential cmake nvtop \
-        libgl1 libglib2.0-0 clang libomp-dev ninja-build \
+        git git-lfs wget curl aria2 bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential cmake nvtop \
+        libgl1 libglib2.0-0 clang libomp-dev ninja-build libgl1-mesa-glx fonts-dejavu-core \
         openssh-server ca-certificates && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
@@ -92,11 +92,15 @@ RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
         echo "Skipping custom nodes installation because SKIP_CUSTOM_NODES is set"; \
     fi
 
-# Install Runpod CLI
-#RUN wget -qO- cli.runpod.net | sudo bash
-
 # Install code-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN curl -fsSL https://code-server.dev/install.sh | sh && \
+    code-server --install-extension cnbcool.cnb-welcome && \
+	code-server --install-extension redhat.vscode-yaml && \
+	code-server --install-extension waderyan.gitblame && \
+	code-server --install-extension mhutchie.git-graph && \
+	code-server --install-extension donjayamanne.githistory && \
+	code-server --install-extension cloudstudio.live-server && \
+	code-server --install-extension tencent-cloud.coding-copilot
 
 EXPOSE 22 3000 8080 8888
 
@@ -120,9 +124,9 @@ COPY --chmod=755 scripts/download_presets.sh /
 COPY --chmod=755 scripts/install_custom_nodes.sh /
 
 # Welcome Message
-COPY logo/runpod.txt /etc/runpod.txt
-RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
-RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
+COPY logo/logo.txt /etc/logo.txt
+RUN echo 'cat /etc/logo.txt' >> /root/.bashrc
+RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://cnb.cool/itgay\033[0m and \033[1;34mhttps://cnb.cool/itgay\033[0m\n\n"' >> /root/.bashrc
 
 # Set entrypoint to the start script
 CMD ["/start.sh"]
