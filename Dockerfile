@@ -130,4 +130,7 @@ RUN echo 'cat /etc/logo.txt' >> /root/.bashrc
 RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://cnb.cool/itgay\033[0m and \033[1;34mhttps://cnb.cool/itgay\033[0m\n\n"' >> /root/.bashrc
 
 # Set entrypoint to the start script
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+
 CMD ["/start.sh"]
