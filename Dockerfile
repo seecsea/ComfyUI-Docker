@@ -42,17 +42,14 @@ ENV TZ=Etc/UTC
 WORKDIR /
 
 # Update and upgrade
-RUN apt-get update --yes && \
+RUN sed -i 's|^URIs:.*archive.ubuntu.com.*|URIs: https://mirrors.cloud.tencent.com/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources && \
+    apt-get update --yes && \
     apt-get upgrade --yes
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
 # Install essential packages
-RUN echo "=== Before modification ===" && \
-    cat /etc/apt/sources.list.d/ubuntu.sources && \
-    sed -i 's|^URIs:.*archive.ubuntu.com.*|URIs: https://mirrors.cloud.tencent.com/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources && \
-    apt-get update && \
-    apt-get install --yes --no-install-recommends \
+RUN apt-get install --yes --no-install-recommends \
         git git-lfs wget curl aria2 bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential cmake nvtop \
         libgl1 libglib2.0-0 clang libomp-dev ninja-build fonts-dejavu-core \
         openssh-server ca-certificates && \
