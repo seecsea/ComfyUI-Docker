@@ -74,7 +74,6 @@ RUN pip config set global.index-url https://mirrors.cloud.tencent.com/pypi/simpl
     huggingface_hub hf_transfer \
     numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
     triton \
-	nvidia-ml-py \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://mirrors.nju.edu.cn/pytorch/whl/${CUDA_VERSION}
 
 # Install ComfyUI and ComfyUI Manager
