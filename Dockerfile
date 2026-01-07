@@ -1,5 +1,5 @@
 # Set the base image
-ARG BASE_IMAGE
+ARG BASE_IMAGE=nvidia/cuda:12.9.1-cudnn-devel-ubuntu24.04
 FROM ${BASE_IMAGE}
 
 # Set the shell and enable pipefail for better error handling
