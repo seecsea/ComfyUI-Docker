@@ -6,7 +6,7 @@ variable "PYTHON_VERSION" {
     default = "3.13"
 }
 variable "TORCH_VERSION" {
-    default = "2.9.1"
+    default = "2.8.0"
 }
 
 variable "EXTRA_TAG" {
