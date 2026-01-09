@@ -43,7 +43,7 @@ WORKDIR /
 
 # Update and upgrade
 RUN apt-get update --yes && \
-    apt-get upgrade --yes \
+    apt-get upgrade --yes && \
 	apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
