@@ -11,8 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [slim]
-        cuda: [13-0]
+        target: [base]
+        cuda: [12-8, 12-9]
     steps:
       - name: Maximize build space
         uses: AdityaGarg8/remove-unwanted-software@v5
