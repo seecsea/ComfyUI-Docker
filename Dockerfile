@@ -50,8 +50,8 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
 # Install essential packages
 RUN apt-get install --yes --no-install-recommends \
-        git git-lfs wget curl aria2 bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential cmake nvtop \
-        libgl1 libglib2.0-0 clang libomp-dev ninja-build fonts-dejavu-core net-tools \
+        git git-lfs wget curl aria2 bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential cmake nvtop locales \
+        libgl1 libglib2.0-0 clang libomp-dev ninja-build fonts-dejavu-core net-tools jq screen htop libssl-dev libffi-dev libsqlite3-0 \
         openssh-server ca-certificates && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
@@ -101,7 +101,21 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh && \
 	code-server --install-extension mhutchie.git-graph && \
 	code-server --install-extension donjayamanne.githistory && \
 	code-server --install-extension cloudstudio.live-server && \
-	code-server --install-extension tencent-cloud.coding-copilot
+	code-server --install-extension tencent-cloud.coding-copilot && \
+	rm -rf $HOME/.cache/code-server/* /root/.config/code-server/logs
+
+# --- VSCode 配置: 禁用预览、设置启动编辑器、禁用 Copilot 欢迎消息 ---
+# 修改开始: 专门优化文件打开行为
+# "workbench.editor.enablePreview": false  <-- 此行是关键，彻底禁用预览模式，让单击文件总是在新标签页打开
+# "workbench.editor.showTabs": "multiple"  <-- 此行为辅助，确保多标签页模式总是开启（通常是默认值，但显式设置更保险）
+RUN mkdir -p /root/.local/share/code-server/User \
+    && echo '{ \
+        "workbench.startupEditor": "readme", \
+        "workbench.editor.enablePreview": false, \
+        "github.copilot.chat.welcomeMessage": "never", \
+        "workbench.editor.showTabs": "multiple" \
+    }' > /root/.local/share/code-server/User/settings.json
+# 修改结束
 
 EXPOSE 22 3000 8080 8888
 
