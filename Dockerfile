@@ -71,9 +71,19 @@ RUN pip install --no-cache-dir -U \
     jupyterlab jupyterlab_widgets ipykernel ipywidgets \
     huggingface_hub hf_transfer \
     numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
-    triton \
+    triton ninja \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
-    
+
+# Install SageAttention and flash_attn
+RUN git clone https://github.com/thu-ml/SageAttention.git && \
+    cd SageAttention && \
+	export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 && \
+	python setup.py install
+
+RUN wget https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.6.8/flash_attn-2.8.3+cu130torch2.9-cp313-cp313-linux_x86_64.whl && \
+    pip install --no-cache-dir flash_attn-2.8.3+cu130torch2.9-cp313-cp313-linux_x86_64.whl && \
+	rm -f flash_attn-2.8.3+cu130torch2.9-cp313-cp313-linux_x86_64.whl
+
 # Install ComfyUI and ComfyUI Manager
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd ComfyUI && \
