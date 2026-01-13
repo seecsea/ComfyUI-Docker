@@ -33,9 +33,14 @@ update_venv_paths() {
 
 echo "**** syncing venv to workspace, please wait. This could take a while on first startup! ****"
 if [ -d /venv ]; then
-    if rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv; then
-        update_venv_paths
+    if [ ! -d /workspace/venv ]; then
+        # 目标不存在，直接移动
+        mv /venv /workspace/venv
+    else
+        # 目标存在，使用 rsync 合并
+        rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv
     fi
+    update_venv_paths
 else
     echo "Skip: /venv does not exist."
 fi
