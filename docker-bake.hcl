@@ -6,7 +6,7 @@ variable "PYTHON_VERSION" {
     default = "3.13"
 }
 variable "TORCH_VERSION" {
-    default = "2.9.1"
+    default = "2.8.0"
 }
 
 variable "EXTRA_TAG" {
@@ -62,7 +62,7 @@ target "_cu128" {
 target "_cu129" {
     inherits = ["_common"]
     args = {
-        BASE_IMAGE         = "nvidia/cuda:12.9.1-devel-ubuntu24.04"
+        BASE_IMAGE         = "nvidia/cuda:12.9.1-cudnn-devel-ubuntu24.04"
         CUDA_VERSION       = "cu129"
     }
 }
