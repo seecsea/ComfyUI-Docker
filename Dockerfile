@@ -95,7 +95,7 @@ RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
         xargs -n 1 git clone --recursive < /custom_nodes.txt && \
         find /ComfyUI/custom_nodes -name "requirements.txt" -exec sh -c 'echo "Installing requirements from: $1" && pip install --no-cache-dir -r "$1"' _ {} \; && \
         find /ComfyUI/custom_nodes -name "install.py" -exec sh -c 'echo "Running install script: $1" && python "$1"' _ {} \; && \
-        git clone --recursive https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git \
+        git clone --recursive https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git; \
     else \
         echo "Skipping custom nodes installation because SKIP_CUSTOM_NODES is set"; \
     fi
