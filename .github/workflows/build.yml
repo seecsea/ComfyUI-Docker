@@ -26,6 +26,35 @@ jobs:
           remove-cached-tools: 'true'
           remove-swapfile: 'true'
 
+      - name: Stop Docker and move data directory to /mnt
+        run: |
+          echo "==> Stopping Docker service"
+          sudo systemctl stop docker
+          sudo systemctl stop docker.socket
+          
+          echo "==> Creating new Docker data directory in /mnt"
+          sudo mkdir -p /mnt/docker-data
+          
+          echo "==> Moving existing Docker data (if any)"
+          if [ -d "/var/lib/docker" ]; then
+            sudo mv /var/lib/docker/* /mnt/docker-data/ 2>/dev/null || true
+          fi
+          
+          echo "==> Configuring Docker daemon to use /mnt/docker-data"
+          sudo mkdir -p /etc/docker
+          sudo tee /etc/docker/daemon.json > /dev/null <<EOF
+          {
+            "data-root": "/mnt/docker-data",
+            "storage-driver": "overlay2"
+          }
+          EOF
+          
+          echo "==> Starting Docker service"
+          sudo systemctl start docker
+          
+          echo "==> Verifying new configuration"
+          docker info | grep "Docker Root Dir"
+
       - name: Checkout
         uses: actions/checkout@v4
 
