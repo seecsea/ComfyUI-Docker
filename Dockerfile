@@ -76,7 +76,6 @@ RUN pip install --no-cache-dir -U \
 
 # Install SageAttention and flash_attn
 RUN git clone https://github.com/thu-ml/SageAttention.git && \
-    git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git && \
     wget https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.7.2/flash_attn-2.8.3+cu129torch2.8-cp313-cp313-linux_x86_64.whl && \
     pip install --no-cache-dir flash_attn-2.8.3+cu129torch2.8-cp313-cp313-linux_x86_64.whl && \
 	rm -f flash_attn-2.8.3+cu129torch2.8-cp313-cp313-linux_x86_64.whl
@@ -96,6 +95,7 @@ RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
         xargs -n 1 git clone --recursive < /custom_nodes.txt && \
         find /ComfyUI/custom_nodes -name "requirements.txt" -exec sh -c 'echo "Installing requirements from: $1" && pip install --no-cache-dir -r "$1"' _ {} \; && \
         find /ComfyUI/custom_nodes -name "install.py" -exec sh -c 'echo "Running install script: $1" && python "$1"' _ {} \; ; \
+		git clone --recursive https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git && \
     else \
         echo "Skipping custom nodes installation because SKIP_CUSTOM_NODES is set"; \
     fi
