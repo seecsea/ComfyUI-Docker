@@ -1,0 +1,112 @@
+name: Docker Configuration and Build with Extended Storage
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-with-extended-storage:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Check initial disk space and Docker config
+      run: |
+        echo "==> Initial disk space:"
+        df -h
+        echo ""
+        echo "==> Docker info:"
+        docker info
+        echo ""
+        echo "==> Docker root directory:"
+        docker info | grep "Docker Root Dir" || echo "Docker Root Dir not found in info"
+        echo ""
+        echo "==> Current Docker data directory size:"
+        sudo du -sh /var/lib/docker 2>/dev/null || echo "/var/lib/docker not found or no permission"
+    
+    - name: Free up disk space
+      uses: jlumbroso/free-disk-space@main
+      with:
+        tool-cache: false
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
+    
+    - name: Stop Docker and move data directory to /mnt
+      run: |
+        echo "==> Stopping Docker service"
+        sudo systemctl stop docker
+        sudo systemctl stop docker.socket
+        
+        echo "==> Creating new Docker data directory in /mnt"
+        sudo mkdir -p /mnt/docker-data
+        
+        echo "==> Moving existing Docker data (if any)"
+        if [ -d "/var/lib/docker" ]; then
+          sudo mv /var/lib/docker/* /mnt/docker-data/ 2>/dev/null || true
+        fi
+        
+        echo "==> Configuring Docker daemon to use /mnt/docker-data"
+        sudo mkdir -p /etc/docker
+        sudo tee /etc/docker/daemon.json > /dev/null <<EOF
+        {
+          "data-root": "/mnt/docker-data",
+          "storage-driver": "overlay2"
+        }
+        EOF
+        
+        echo "==> Starting Docker service"
+        sudo systemctl start docker
+        
+        echo "==> Verifying new configuration"
+        docker info | grep "Docker Root Dir"
+    
+    - name: Check disk space after Docker relocation
+      run: |
+        echo "==> Disk space after Docker relocation:"
+        df -h
+        echo ""
+        echo "==> Docker data directory size:"
+        sudo du -sh /mnt/docker-data
+    
+    - name: Test Docker functionality
+      run: |
+        echo "==> Testing Docker with a simple container"
+        docker run --rm hello-world
+    
+    # 这里添加你的实际构建步骤
+    - name: Build your Docker image
+      run: |
+        echo "==> Building your Docker image"
+        # 替换为你的实际 Dockerfile 构建命令
+        # docker build -t your-image:latest .
+        
+        # 如果你有 docker-compose
+        # docker-compose build
+        
+        # 示例：构建一个测试镜像来验证空间充足
+        cat > Dockerfile.test << 'EOF'
+        FROM ubuntu:22.04
+        RUN apt-get update && apt-get install -y python3 python3-pip
+        RUN pip3 install numpy pandas matplotlib
+        EOF
+        
+        docker build -f Dockerfile.test -t test-image:latest .
+    
+    - name: Final disk space check
+      run: |
+        echo "==> Final disk space usage:"
+        df -h
+        echo ""
+        echo "==> Docker images:"
+        docker images
+        echo ""
+        echo "==> Docker data directory size:"
+        sudo du -sh /mnt/docker-data
