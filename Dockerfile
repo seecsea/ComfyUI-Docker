@@ -93,8 +93,8 @@ COPY custom_nodes.txt /custom_nodes.txt
 RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
         cd /ComfyUI/custom_nodes && \
         xargs -n 1 git clone --recursive < /custom_nodes.txt && \
-        find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
-        find /ComfyUI/custom_nodes -name "install.py" -exec python {} \; ; \
+        find /ComfyUI/custom_nodes -name "requirements.txt" -exec sh -c 'echo "Installing requirements from: $1" && pip install --no-cache-dir -r "$1"' _ {} \; && \
+        find /ComfyUI/custom_nodes -name "install.py" -exec sh -c 'echo "Running install script: $1" && python "$1"' _ {} \; ; \
     else \
         echo "Skipping custom nodes installation because SKIP_CUSTOM_NODES is set"; \
     fi
