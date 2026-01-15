@@ -3,7 +3,7 @@ variable "DOCKERHUB_REPO_NAME" {
 }
 
 variable "PYTHON_VERSION" {
-    default = "3.13"
+    default = "3.12"
 }
 variable "TORCH_VERSION" {
     default = "2.8.0"
