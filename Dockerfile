@@ -76,8 +76,8 @@ RUN pip install --no-cache-dir -U \
 
 # Install SageAttention and flash_attn
 RUN git clone https://github.com/thu-ml/SageAttention.git && \
+    git clone https://github.com/thu-ml/SpargeAttn.git && \
     wget https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.7.2/flash_attn-2.8.3+cu128torch2.8-cp312-cp312-linux_x86_64.whl && \
-	# pip install git+https://github.com/thu-ml/SpargeAttn.git --no-build-isolation && \
 	pip install --no-cache-dir flash_attn-2.8.3+cu128torch2.8-cp312-cp312-linux_x86_64.whl && \
 	rm -f flash_attn-2.8.3+cu128torch2.8-cp312-cp312-linux_x86_64.whl
 
