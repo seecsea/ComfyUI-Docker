@@ -77,9 +77,9 @@ RUN pip install --no-cache-dir -U \
 # Install SageAttention and flash_attn
 RUN git clone https://github.com/thu-ml/SageAttention.git && \
     git clone https://github.com/thu-ml/SpargeAttn.git && \
-    wget https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.7.16/flash_attn-2.8.3+cu130torch2.9-cp313-cp313-linux_x86_64.whl && \
-	pip install --no-cache-dir flash_attn-2.8.3+cu130torch2.9-cp313-cp313-linux_x86_64.whl && \
-	rm -f flash_attn-2.8.3+cu130torch2.9-cp313-cp313-linux_x86_64.whl
+    wget https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.7.11/flash_attn-2.8.3+cu129torch2.8-cp313-cp313-linux_x86_64.whl && \
+	pip install --no-cache-dir flash_attn-2.8.3+cu129torch2.8-cp313-cp313-linux_x86_64.whl && \
+	rm -f flash_attn-2.8.3+cu129torch2.8-cp313-cp313-linux_x86_64.whl
 
 # Install ComfyUI and ComfyUI Manager
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
