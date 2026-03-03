@@ -3,19 +3,19 @@ variable "DOCKERHUB_REPO_NAME" {
 }
 
 variable "PYTHON_VERSION" {
-    default = "3.13"
+    default = "3.12"
 }
 variable "TORCH_VERSION" {
-    default = "2.8.0"
+    default = "2.9.1"
 }
 
 variable "EXTRA_TAG" {
-    default = ""
+    default = "0.15.1"
 }
 
 function "tag" {
     params = [tag, cuda]
-    result = ["${DOCKERHUB_REPO_NAME}:${tag}-torch${TORCH_VERSION}-${cuda}-py${PYTHON_VERSION}${EXTRA_TAG}"]
+    result = ["${DOCKERHUB_REPO_NAME}:${tag}-torch${TORCH_VERSION}-${cuda}-py${PYTHON_VERSION}-${EXTRA_TAG}"]
 }
 
 target "_common" {
