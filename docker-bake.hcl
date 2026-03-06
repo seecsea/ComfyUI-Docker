@@ -30,6 +30,8 @@ target "_common" {
     args = {
         PYTHON_VERSION     = PYTHON_VERSION
         TORCH_VERSION      = TORCH_VERSION
+        COMFYUI_VERSION    = COMFYUI_VERSION
+        CODESERVER_VERSION = CODESERVER_VERSION
     }
 }
 
