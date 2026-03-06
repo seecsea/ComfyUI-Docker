@@ -8,14 +8,20 @@ variable "PYTHON_VERSION" {
 variable "TORCH_VERSION" {
     default = "2.9.1"
 }
+variable "COMFYUI_VERSION" {
+    default = "0.16.3"
+}
+variable "CODESERVER_VERSION" {
+    default = "4.108.1"
+}
 
 variable "EXTRA_TAG" {
-    default = "0.15.1"
+    default = ""
 }
 
 function "tag" {
     params = [tag, cuda]
-    result = ["${DOCKERHUB_REPO_NAME}:${tag}-torch${TORCH_VERSION}-${cuda}-py${PYTHON_VERSION}-${EXTRA_TAG}"]
+    result = ["${DOCKERHUB_REPO_NAME}:${tag}-torch${TORCH_VERSION}-${cuda}-py${PYTHON_VERSION}-${COMFYUI_VERSION}"]
 }
 
 target "_common" {
