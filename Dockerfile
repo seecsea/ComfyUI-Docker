@@ -9,6 +9,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG PYTHON_VERSION
 ARG TORCH_VERSION
 ARG CUDA_VERSION
+ARG COMFYUI_VERSION
+ARG CODESERVER_VERSION
 ARG SKIP_CUSTOM_NODES
 
 # Set basic environment variables
@@ -82,7 +84,7 @@ RUN git clone https://github.com/thu-ml/SageAttention.git && \
 	rm -f flash_attn-2.8.3+cu130torch2.9-cp312-cp312-linux_x86_64.whl
 
 # Install ComfyUI and ComfyUI Manager
-RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
+RUN git clone --depth 1 --branch ${COMFYUI_VERSION} https://github.com/comfyanonymous/ComfyUI.git && \
     cd ComfyUI && \
     pip install --no-cache-dir -r requirements.txt && \
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager && \
@@ -102,7 +104,7 @@ RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
     fi
 
 # Install code-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=4.108.1 && \
+RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=${CODESERVER_VERSION} && \
     code-server --install-extension cnbcool.cnb-welcome && \
 	code-server --install-extension redhat.vscode-yaml && \
 	code-server --install-extension waderyan.gitblame && \
