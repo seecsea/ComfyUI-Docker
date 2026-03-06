@@ -102,7 +102,7 @@ RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
     fi
 
 # Install code-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh && \
+RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=4.108.1 && \
     code-server --install-extension cnbcool.cnb-welcome && \
 	code-server --install-extension redhat.vscode-yaml && \
 	code-server --install-extension waderyan.gitblame && \
