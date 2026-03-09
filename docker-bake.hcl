@@ -9,10 +9,10 @@ variable "TORCH_VERSION" {
     default = "2.9.1"
 }
 variable "COMFYUI_VERSION" {
-    default = "0.16.3"
+    default = "0.16.4"
 }
 variable "CODESERVER_VERSION" {
-    default = "4.108.1"
+    default = "4.108.2"
 }
 
 variable "EXTRA_TAG" {
