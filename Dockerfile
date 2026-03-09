@@ -84,7 +84,7 @@ RUN git clone https://github.com/thu-ml/SageAttention.git && \
 	rm -f flash_attn-2.8.3+cu130torch2.9-cp312-cp312-linux_x86_64.whl
 
 # Install ComfyUI and ComfyUI Manager
-RUN git clone --depth 1 --branch v${COMFYUI_VERSION} https://github.com/comfyanonymous/ComfyUI.git && \
+RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd ComfyUI && \
     pip install --no-cache-dir -r requirements.txt && \
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager && \
