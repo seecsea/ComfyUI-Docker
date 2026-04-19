@@ -74,7 +74,7 @@ RUN pip install --no-cache-dir -U \
     huggingface_hub hf_transfer \
     numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
     triton ninja cupy-cuda12x \
-    torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
+    torch==${TORCH_VERSION} torchvision==${TORCH_VISION_VERSION} torchaudio==${TORCH_AUDIO_VERSION} --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 
 # Install SageAttention and flash_attn
 RUN git clone https://github.com/thu-ml/SageAttention.git && \
