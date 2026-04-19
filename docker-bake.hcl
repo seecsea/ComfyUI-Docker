@@ -8,6 +8,12 @@ variable "PYTHON_VERSION" {
 variable "TORCH_VERSION" {
     default = "2.9.1"
 }
+variable "TORCH_VISION_VERSION" {
+    default = "0.24.1"
+}
+variable "TORCH_AUDIO_VERSION" {
+    default = "2.9.1"
+}
 variable "COMFYUI_VERSION" {
     default = "0.19.3"
 }
