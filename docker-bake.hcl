@@ -43,22 +43,6 @@ target "_common" {
     }
 }
 
-target "_cu124" {
-    inherits = ["_common"]
-    args = {
-        BASE_IMAGE         = "nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04"
-        CUDA_VERSION       = "cu124"
-    }
-}
-
-target "_cu125" {
-    inherits = ["_common"]
-    args = {
-        BASE_IMAGE         = "nvidia/cuda:12.5.1-cudnn-devel-ubuntu24.04"
-        CUDA_VERSION       = "cu125"
-    }
-}
-
 target "_cu126" {
     inherits = ["_common"]
     args = {
@@ -70,24 +54,32 @@ target "_cu126" {
 target "_cu128" {
     inherits = ["_common"]
     args = {
-        BASE_IMAGE         = "nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04"
+        BASE_IMAGE         = "nvidia/cuda:12.8.2-cudnn-devel-ubuntu24.04"
         CUDA_VERSION       = "cu128"
-    }
-}
-
-target "_cu129" {
-    inherits = ["_common"]
-    args = {
-        BASE_IMAGE         = "nvidia/cuda:12.9.1-cudnn-devel-ubuntu24.04"
-        CUDA_VERSION       = "cu129"
     }
 }
 
 target "_cu130" {
     inherits = ["_common"]
     args = {
-        BASE_IMAGE         = "nvidia/cuda:13.0.2-cudnn-devel-ubuntu24.04"
+        BASE_IMAGE         = "nvidia/cuda:13.0.3-cudnn-devel-ubuntu24.04"
         CUDA_VERSION       = "cu130"
+    }
+}
+
+target "_cu131" {
+    inherits = ["_common"]
+    args = {
+        BASE_IMAGE         = "nvidia/cuda:13.1.2-cudnn-devel-ubuntu24.04"
+        CUDA_VERSION       = "cu131"
+    }
+}
+
+target "_cu132" {
+    inherits = ["_common"]
+    args = {
+        BASE_IMAGE         = "nvidia/cuda:13.2.1-cudnn-devel-ubuntu24.04"
+        CUDA_VERSION       = "cu132"
     }
 }
 
@@ -95,16 +87,6 @@ target "_no_custom_nodes" {
     args = {
         SKIP_CUSTOM_NODES = "1"
     }
-}
-
-target "base-12-4" {
-    inherits = ["_cu124"]
-    tags = tag("base", "cu124")
-}
-
-target "base-12-5" {
-    inherits = ["_cu125"]
-    tags = tag("base", "cu125")
 }
 
 target "base-12-6" {
@@ -117,24 +99,19 @@ target "base-12-8" {
     tags = tag("base", "cu128")
 }
 
-target "base-12-9" {
-    inherits = ["_cu129"]
-    tags = tag("base", "cu129")
-}
-
 target "base-13-0" {
     inherits = ["_cu130"]
     tags = tag("base", "cu130")
 }
 
-target "slim-12-4" {
-    inherits = ["_cu124", "_no_custom_nodes"]
-    tags = tag("slim", "cu124")
+target "base-13-1" {
+    inherits = ["_cu131"]
+    tags = tag("base", "cu131")
 }
 
-target "slim-12-5" {
-    inherits = ["_cu125", "_no_custom_nodes"]
-    tags = tag("slim", "cu125")
+target "base-13-2" {
+    inherits = ["_cu132"]
+    tags = tag("base", "cu132")
 }
 
 target "slim-12-6" {
@@ -147,12 +124,17 @@ target "slim-12-8" {
     tags = tag("slim", "cu128")
 }
 
-target "slim-12-9" {
-    inherits = ["_cu129", "_no_custom_nodes"]
-    tags = tag("slim", "cu129")
-}
-
 target "slim-13-0" {
     inherits = ["_cu130", "_no_custom_nodes"]
     tags = tag("slim", "cu130")
+}
+
+target "slim-13-1" {
+    inherits = ["_cu131", "_no_custom_nodes"]
+    tags = tag("slim", "cu131")
+}
+
+target "slim-13-2" {
+    inherits = ["_cu132", "_no_custom_nodes"]
+    tags = tag("slim", "cu132")
 }
