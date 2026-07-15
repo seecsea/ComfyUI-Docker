@@ -18,7 +18,7 @@ variable "COMFYUI_VERSION" {
     default = "0.28.0"
 }
 variable "CODESERVER_VERSION" {
-    default = "4.123.0"
+    default = "4.128.0"
 }
 
 variable "EXTRA_TAG" {
