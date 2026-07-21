@@ -15,7 +15,7 @@ variable "TORCH_AUDIO_VERSION" {
     default = "2.9.1"
 }
 variable "COMFYUI_VERSION" {
-    default = "0.28.0"
+    default = "0.28.2"
 }
 variable "CODESERVER_VERSION" {
     default = "4.128.0"
